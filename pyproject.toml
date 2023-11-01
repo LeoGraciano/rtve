@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "expense-control"
+version = "0.1.0"
+description = ""
+authors = ["Léo Graciano <leonardoferreiragraciano@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.7"
+djangorestframework = "^3.14.0"
+django-filter = "^23.3"
+django-redis = "^5.4.0"
+psycopg2-binary = "^2.9.9"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+black = "^23.10.1"
+flake8 = "^6.1.0"
+django-extensions = "^3.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | migrations/
+  | venv
+  | _build
+  | manage.py
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.poetry.extras]
+ci-tools = ["black", "setuptools"]
+
+[tool.isort]
+profile = "black"
+skip = [".venv"]
