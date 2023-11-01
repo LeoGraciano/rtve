@@ -4,6 +4,7 @@ services:
   app:
     image: rtve
     container_name: app_rtve
+    restart: always
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -15,7 +16,7 @@ services:
       - db_postgres
       - db_redis
 
-    command: ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000", "--insecure"]
+    command: bash -c "poetry install && poetry run python manage.py makemigrations accounts --noinput && poetry run python manage.py makemigrations --noinput && poetry run python manage.py migrate --noinput && poetry run python manage.py runserver 0.0.0.0:8000 --insecure"
 
 
   db_redis:

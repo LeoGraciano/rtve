@@ -13,6 +13,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+ENV DB_HOST=db_postgres
+
 # Set the default directory where CMD will execute
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
