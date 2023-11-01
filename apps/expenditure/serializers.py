@@ -5,6 +5,7 @@ from apps.expenditure.models import Expense
 
 class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
     created_by = serializers.SerializerMethodField()
+    categories = serializers.SerializerMethodField()
 
     def save(self, *args, **kwargs):
         instance = super(ExpenseSerializer, self).save(*args, **kwargs)
@@ -20,6 +21,14 @@ class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
             return instance.created_by.name
         except Exception:
             return ""
+
+    def get_categories(self, instance):
+        try:
+            categories = instance.categories.all()
+            if categories.exists():
+                return [str(x.name) for x in categories]
+        except Exception:
+            return
 
     class Meta:
         model = Expense
