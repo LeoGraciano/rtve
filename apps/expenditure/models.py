@@ -26,9 +26,9 @@ class Expense(BaseModelField):
         editable=False,
     )
 
-    def get_categories(self, instance) -> list:
+    def get_categories(self) -> list:
         try:
-            categories = instance.categories.all()
+            categories = self.categories.all()
             if categories.exists():
                 return [str(x.name) for x in categories]
         except Exception:
