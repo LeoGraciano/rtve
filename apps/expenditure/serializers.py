@@ -23,12 +23,7 @@ class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
             return ""
 
     def get_categories(self, instance):
-        try:
-            categories = instance.categories.all()
-            if categories.exists():
-                return [str(x.name) for x in categories]
-        except Exception:
-            return
+        return instance.get_categories()
 
     class Meta:
         model = Expense

@@ -26,6 +26,16 @@ class Expense(BaseModelField):
         editable=False,
     )
 
+    def get_categories(self, instance) -> list:
+        try:
+            categories = instance.categories.all()
+            if categories.exists():
+                return [str(x.name) for x in categories]
+        except Exception:
+            pass
+
+        return []
+
     def __str__(self):
         return f"{self.description} - {self.date.strftime('%d/%m/%Y')} - {self.value}"
 
