@@ -6,6 +6,7 @@ BUSINESS_APPS = [
 ]
 
 THIRD_APPS = [
+    "django_filters",
     "bootstrap5",
     "rest_framework",
 ]
