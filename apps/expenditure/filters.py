@@ -29,6 +29,12 @@ class ExpenseFilter(filters.FilterSet):
         field_name="date",
     )
 
+    categories = filters.CharFilter(
+        label="Categoria",
+        field_name="categories__name",
+        lookup_expr="icontains",
+    )
+
     class Meta:
         model = Expense
         fields = [
