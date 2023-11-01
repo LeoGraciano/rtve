@@ -15,5 +15,4 @@ Clone the repository: git clone https://github.com/LeoGraciano/rtve.git
 docker-compose -up
 
 Start the development server:
-
 Open your web browser and access the application at http://localhost:8000
