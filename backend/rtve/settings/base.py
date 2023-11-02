@@ -6,6 +6,7 @@ from .host_settings import *  # noqa: ignore=F401 isort:skip
 from .media_settings import *  # noqa: ignore=F401 isort:skip
 from .email_settings import *  # noqa: ignore=F401 isort:skip
 from .rest_framework_settings import *  # noqa: ignore=F401 isort:skip
+from .cors_settings import *  # noqa: ignore=F401 isort:skip
 from .cache_settings import *  # noqa: ignore=F401 isort:skip
 from .database_settings import *  # noqa: ignore=F401 isort:skip
 

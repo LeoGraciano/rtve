@@ -27,3 +27,7 @@ RUN pip install poetry
 RUN poetry install
 ADD . /usr/src/app/
 
+RUN poetry run python manage.py makemigrations accounts --noinput
+RUN poetry run python manage.py makemigrations --noinput
+RUN poetry run python manage.py migrate --noinput
+
