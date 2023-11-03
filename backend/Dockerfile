@@ -18,16 +18,15 @@ ENV DB_HOST=db_postgres
 # Set the default directory where CMD will execute
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-ADD pyproject.toml /usr/src/app/
-ADD poetry.lock /usr/src/app/
+ADD ./backend/pyproject.toml /usr/src/app/
+ADD ./backend/poetry.lock /usr/src/app/
 # System Deps
 # RUN apt-get update && apt-get install && apt-get clean
 RUN pip install --upgrade pip
 RUN pip install poetry
 RUN poetry install
-ADD . /usr/src/app/
+ADD ./backend/ /usr/src/app/
 
 RUN poetry run python manage.py makemigrations accounts --noinput
 RUN poetry run python manage.py makemigrations --noinput
-RUN poetry run python manage.py migrate --noinput
 

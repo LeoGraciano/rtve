@@ -1,9 +1,8 @@
-from django.urls import include, path
-from rest_framework import routers
-
 from apps.accounts import views as accounts_views
 from apps.categories import views as categories_views
 from apps.expenditure import views as expenditure_views
+from django.urls import include, path
+from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r"categories", categories_views.CategoryViewSet)

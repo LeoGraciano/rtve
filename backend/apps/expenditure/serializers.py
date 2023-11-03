@@ -1,16 +1,18 @@
+from apps.categories.serializers import CategorySerializer
+from apps.expenditure.models import Expense
 from rest_framework import serializers
 
-from apps.expenditure.models import Expense
 
-
-class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
+class ExpenseSerializer(serializers.ModelSerializer):
     created_by = serializers.SerializerMethodField()
-    categories = serializers.SerializerMethodField()
+    categories = CategorySerializer
+
+    categories_display = serializers.SerializerMethodField(read_only=True)
 
     def save(self, *args, **kwargs):
         instance = super(ExpenseSerializer, self).save(*args, **kwargs)
-        if instance.created_by is None:
-            request = self.context.get("request")
+        request = self.context.get("request")
+        if request.user.is_authenticated and instance.created_by is None:
             instance.created_by = request.user
             instance.save()
 
@@ -22,9 +24,19 @@ class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
         except Exception:
             return ""
 
-    def get_categories(self, instance):
-        return instance.get_categories()
+    def get_categories_display(self, instance):
+        return ", ".join(instance.get_categories())
 
     class Meta:
         model = Expense
-        fields = ["url", "description", "date", "value", "categories", "created_by"]
+        fields = [
+            "url",
+            "uuid",
+            "description",
+            "date",
+            "value",
+            "categories",
+            "categories_display",
+            "created_by",
+            "is_active",
+        ]

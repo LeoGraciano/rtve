@@ -1,9 +1,8 @@
-from django_filters import rest_framework as filters
-from rest_framework import viewsets
-
 from apps.expenditure.filters import ExpenseFilter
 from apps.expenditure.models import Expense
 from apps.expenditure.serializers import ExpenseSerializer
+from django_filters import rest_framework as filters
+from rest_framework import viewsets
 
 
 class ExpenseViewSet(viewsets.ModelViewSet):
@@ -13,5 +12,5 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
+    filter_backends = [filters.DjangoFilterBackend]
     filterset_class = ExpenseFilter

@@ -1,23 +1,6 @@
 version: '3.4'
 
 services:
-  app:
-    image: rtve
-    container_name: app_rtve
-    restart: always
-    build:
-      context: .
-      dockerfile: ./backend/Dockerfile
-    volumes:
-      - ./backend:/usr/src/app
-    ports:
-      - 8000:8000
-    links:
-      - db_postgres
-      - db_redis
-
-    command: bash -c "poetry install && poetry run python manage.py makemigrations --noinput && poetry run python manage.py migrate --noinput && poetry run python manage.py runserver 0.0.0.0:8000 --insecure"
-
 
   db_redis:
     image: redis:latest
@@ -39,6 +22,38 @@ services:
       - pg-data:/var/lib/postgresql/data
       - type: tmpfs
         target: /dev/shm
+
+  app:
+    image: rtve
+    container_name: app_rtve
+    restart: always
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - 8000:8000
+    links:
+      - db_postgres
+      - db_redis
+    depends_on:
+      - db_postgres
+      - db_redis
+
+    command: bash -c "poetry install && poetry run python manage.py makemigrations --noinput && poetry run python manage.py migrate --noinput && poetry run python manage.py runserver 0.0.0.0:8000 --insecure"
+
+  web:
+      container_name: web
+      build:
+          context: .
+          dockerfile: ./frontend/Dockerfile
+      depends_on:
+        - app
+      ports:
+      - 5173:5173
+      - 3000:3000
+
 
 volumes:
   pg-data:
